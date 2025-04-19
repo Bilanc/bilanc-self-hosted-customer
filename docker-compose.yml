@@ -24,7 +24,7 @@ services:
     build: .
     ports:
       - "8000:8000"
-    command: uvicorn fastapi_project.main:app --host 0.0.0.0 --reload --port 8000
+    command: gunicorn -w 5 -k uvicorn.workers.UvicornWorker --access-logfile - fastapi_project.main:app --bind 0.0.0.0:8000 --timeout 305 --keep-alive 120 --graceful-timeout 120 --max-requests 1000 --max-requests-jitter 100
     depends_on:
       - broker
     networks:
