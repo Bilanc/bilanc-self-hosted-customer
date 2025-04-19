@@ -1,0 +1,71 @@
+services:
+  dagster_daemon:
+    build: .
+    command: sh initiate_dagster_daemon.sh
+    restart: on-failure
+    env_file:
+      - .env
+    networks:
+      - docker_network
+
+  dagster_webserver:
+    build: .
+    command: sh initiate_dagster_webserver.sh
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env
+    networks:
+      - docker_network
+    depends_on:
+      dagster_daemon:
+        condition: service_started
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    command: uvicorn fastapi_project.main:app --host 0.0.0.0 --reload --port 8000
+    depends_on:
+      - broker
+    networks:
+      - docker_network
+    env_file:
+      - .env
+
+  broker:
+    build: .
+    command: redis-server --protected-mode no
+    ports:
+      - "6379:6379"
+    env_file:
+      - .env
+    networks:
+      - docker_network
+
+  worker:
+    build: .
+    command: >
+      celery -A fastapi_project.routes.ai.ai_celery_tasks worker --concurrency=5 --loglevel=DEBUG -P threads
+    user: nobody
+    depends_on:
+      - broker
+    env_file:
+      - .env
+    links:
+      - broker
+    networks:
+      - docker_network
+  frontend:
+    build: .
+    ports:
+      - "3000:3000"
+    command: sh initiate_frontend_project.sh
+    env_file:
+      - .env
+    networks:
+      - docker_network
+
+networks:
+  docker_network:
+    driver: bridge
+    name: docker_network
