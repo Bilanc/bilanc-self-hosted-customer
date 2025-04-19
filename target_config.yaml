@@ -1,0 +1,8 @@
+postgres:
+  postgres_db:
+    username: !ENV ${POSTGRES_USERNAME}
+    password: !ENV ${POSTGRES_PASSWORD}
+    hostname: !ENV ${POSTGRES_HOST}
+    db_name:  !ENV ${POSTGRES_DATABASE}
+    schema:   !ENV ${RAW_DATA_SCHEMA}
+    port:     !ENV ${POSTGRES_PORT} 
