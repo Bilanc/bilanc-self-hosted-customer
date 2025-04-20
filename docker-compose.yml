@@ -55,6 +55,7 @@ services:
       - broker
     networks:
       - docker_network
+
   frontend:
     build: .
     ports:
