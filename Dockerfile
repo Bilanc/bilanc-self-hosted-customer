@@ -1,4 +1,4 @@
-FROM ghcr.io/bilanc/bilanc-self-hosted:0.1
+FROM ghcr.io/bilanc/bilanc-self-hosted:0.1.1
 
 WORKDIR /app
 
