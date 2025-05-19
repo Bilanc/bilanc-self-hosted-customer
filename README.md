@@ -6,6 +6,9 @@ This repository contains the configuration for running a self-hosted instance of
 
 - Docker and Docker Compose installed on your system
 - Access to required API keys and credentials
+- Make sure your user has read access to the Bilanc self-hosted image (contact a Bilanc team member for assistance)
+- Authenticate into [gcloud CLI](https://cloud.google.com/docs/authentication/gcloud)
+- Run `gcloud auth configure-docker europe-west2-docker.pkg.dev`
 
 ## Setup Instructions
 
@@ -93,19 +96,16 @@ tenants:
   - name: Your Organization Name
     domain: yourdomain.com
     is_auto_onboarding_enabled: true
-    seats: 70
     taps:
       - name: github
         type: tap-github
         config:
           start_date: 2025-01-01
-          access_token: !ENV ${GITHUB_ACCESS_TOKEN}
           repositories: !ENV ${GITHUB_REPOSITORY}
       - name: linear
         type: tap-linear
         config:
           start_date: 2025-01-01
-          access_token: !ENV ${LINEAR_ACCESS_TOKEN}
 ```
 
 Make sure to:
