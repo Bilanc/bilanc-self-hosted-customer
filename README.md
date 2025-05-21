@@ -34,8 +34,15 @@ RAW_DATA_SCHEMA=bilanc
 
 #### API Keys
 ```
+AI_PROVIDER=your_ai_provider (google-ai/anthropic/openai)
+AI_MODEL=your_ai_model
+
+Only define one of the following based on AI_PROVIDER choice:
+GOOGLE_API_KEY=your_google_ai_api_key
 OPENAI_API_KEY=your_openai_api_key
 ANTHROPIC_API_KEY=your_anthropic_api_key
+
+
 ```
 
 #### Integration Tokens
