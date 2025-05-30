@@ -161,3 +161,47 @@ This self-hosted setup consists of several services:
 - Check that the API keys and integration tokens are valid
 
 For more detailed information, please refer to the [Bilanc documentation](https://bilanc.mintlify.app/self-hosting).
+
+## Disabling Linear Integration
+
+To disable Linear functionality in your deployment:
+
+### Step 1: Update Configuration
+Remove the Linear configuration section from `tenant_config.yml`
+
+### Step 2: Update Dagster Containers
+Mount the following files into **both** Dagster containers:
+
+**DBT Run Script:**
+- Source: `dbt_project/dbt_run_exclude_linear.sh`
+- Target: `~/dbt_project/dbt_run.sh`
+
+**Raw Users Model:**
+- Source: `dbt_project/models/marts/raw_users.sql`
+- Target: `~/dbt_project/models/marts/raw_users.sql`
+
+---
+
+## Release Alternative Configuration
+
+To use the alternative release implementation:
+
+### Update Dagster Containers
+Mount the following files into **both** Dagster containers:
+
+**Alternative DBT Run Script:**
+- Source: `dbt_project/dbt_run_releases_alt.sh`
+- Target: `~/dbt_project/dbt_run.sh`
+
+**Alternative Release Details Model:**
+- Source: `dbt_project/models/marts/release_details_alternative.sql`
+- Target: `~/dbt_project/models/marts/release_details.sql`
+
+---
+
+## Important Notes
+
+- All file mounts must be applied to **both** Dagster containers
+- Ensure proper file permissions are maintained during mounting
+- Restart containers after applying configuration changes
+- Verify mounted files are accessible at their target paths before proceeding

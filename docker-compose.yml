@@ -24,7 +24,7 @@ services:
     build: .
     ports:
       - "8000:8000"
-    command: gunicorn -w 5 -k uvicorn.workers.UvicornWorker --access-logfile - fastapi_project.main:app --bind 0.0.0.0:8000 --timeout 305 --keep-alive 120 --graceful-timeout 120 --max-requests 1000 --max-requests-jitter 100
+    command: sh initiate_api.sh
     depends_on:
       - broker
     networks:
@@ -44,8 +44,7 @@ services:
 
   worker:
     build: .
-    command: >
-      celery -A fastapi_project.routes.ai.ai_celery_tasks worker --concurrency=5 --loglevel=DEBUG -P threads
+    command: sh initiate_worker.sh
     user: nobody
     depends_on:
       - broker
