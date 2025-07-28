@@ -50,6 +50,7 @@ ANTHROPIC_API_KEY=your_anthropic_api_key
 GITHUB_ACCESS_TOKEN=your_github_token
 GITHUB_REPOSITORY=owner/repository-1 owner/repository-2
 LINEAR_ACCESS_TOKEN=your_linear_token
+CURSOR_API_KEY=your_cursor_api_key
 ```
 
 #### Application Settings
@@ -111,6 +112,10 @@ tenants:
           repositories: !ENV ${GITHUB_REPOSITORY}
       - name: linear
         type: tap-linear
+        config:
+          start_date: 2025-01-01
+      - name: cursor
+        type: tap-cursor
         config:
           start_date: 2025-01-01
 ```

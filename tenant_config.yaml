@@ -13,4 +13,9 @@ tenants:
         type: tap-linear
         config:
           start_date: 2025-01-01
+      - name: cursor
+        type: tap-cursor
+        config:
+          start_date: 2025-01-01
+
 
